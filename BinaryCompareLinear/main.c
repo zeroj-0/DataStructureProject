@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#define MAX_SIZE 100001
+#define MAX_SIZE 100000
 #define compare(x, y) (((x) < (y)) ? -1 : ((x)==(y))? 0 : 1)
 
 //어떤 것이 더 빨리 찾는가
@@ -19,6 +19,11 @@ int main(void) {
    int result = 0;
    int result2 = 0;
    int searchNum = 0;
+    clock_t start1, stop1;
+    clock_t start2, stop2;
+    double duration1;
+    double duration2;
+    
     //원소의 갯수(배열의 크기)를 얼마나 받을 것인가
    printf("Enter the number of numbers to generator : ");
    scanf("%d", &n);
@@ -32,10 +37,17 @@ int main(void) {
 
    srand((unsigned int) time(NULL));
    searchNum = list2[rand() % n];
+    start1 = clock();
    result = binsearch(list, searchNum, list[0], list[n - 1]);
+    stop1 = clock();
+    start2 = clock();
    result2 = linearSearch(list2, searchNum);
-   printf("이진탐색 : %d를 찾은 횟수 : %d\n", searchNum, result);
-   printf("선형탐색 : %d를 찾은 횟수 : %d\n", searchNum, result2);
+    stop2 = clock();
+    duration1 = ((double)(stop1 - start1)) / CLOCKS_PER_SEC;
+    duration2 = ((double)(stop2 - start2)) / CLOCKS_PER_SEC;
+   printf("%d를 찾는 시간 : %.8f", searchNum, duration1);
+    printf("\n");
+   printf("%d를 찾는 시간 : %.8f", searchNum, duration2);
 }
 int binsearch(int list[], int searchnum, int left, int right) {
    int middle;
